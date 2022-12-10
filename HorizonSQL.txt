@@ -1,0 +1,71 @@
+/*
+
+(3, 1, '20191120', 'Failed' ),
+(3, 1, '20200613', 'Passed' ),
+(1, 2, '20201102', 'Passed' ),
+(1, 1, '20200507', 'Passed' ),
+(3, 1, '20200326', 'Failed' ),
+(1, 3, '20200417', 'Failed' ),
+(3, 1, '20200105', 'Failed' ),
+(1, 3, '20200425', 'Passed' ),
+(1, 1, '20200922', 'Failed' ),
+(1, 1, '20200916', 'Passed' )
+
+Question 1
+
+Return the code_id where test_id passed for 1 and failed for 2?
+
+This can be accomplished with EXISTS, WHERE IN, or a join. 
+https://explainextended.com/2009/06/16/in-vs-join-vs-exists/ 
+This blog shows all three are roughly equivalent, with WHERE IN being 
+slightly faster in some scenarios, so I tend to use that. 
+
+*/
+
+SELECT 
+DISTINCT code_id
+FROM STATUS 
+WHERE test_id = 2 and status = 'Failed'
+AND code_id IN 
+  (
+    SELECT CODE_ID 
+    FROM STATUS
+    WHERE test_id = 1 and status = 'Passed'
+  )
+
+/*
+Question 2
+
+Return the count of failure status with all columns?
+
+Note: I am not sure what level of aggregation is desired here, 
+So I've provided two answers.e
+
+The first has no aggregation. It shows
+the total number of "Failed" occurances in the status table.eee
+
+The second is aggregated at the level of (test_id,code_id,date). 
+this query displays how many times a failure occurs for a specifc 
+test/code combination on a specific date.
+*/
+
+
+SELECT 
+* 
+,(SELECT count(*) FROM status WHERE STATUS = 'Failed') as fail_ct 
+FROM status
+
+SELECT 
+ STRING_AGG("key", ', ') as keys
+,test_id
+,code_id
+,date
+,'Failed' as status
+,COUNT(*) as failed_ct
+FROM status
+WHERE status = 'Failed'
+GROUP BY 
+test_id
+,code_id
+,date
+

@@ -11,7 +11,7 @@ def my_function(self, s3_key, data_df, stage_prefix, output_folder, delimiter=',
     This function takes a dataframe and splits it into multiple files based on the app_id column.
 
     It creates a config file path based on the class attribute instance 'config_path' and  'app_map.json'
-    If the path does not already exist, the function logs and exits.
+    If the path does not already exist, the function logs and exits with 1, indicating an error.
     Iterrows() is used to iterate over rows/columns of the dataframe.
     app_id is matched to the values of an existing client dictionary, if such client is not present in the dict already
     the client is added to the dictionary.

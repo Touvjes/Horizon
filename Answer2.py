@@ -26,22 +26,31 @@ import os
 import csv
 import pandas as pd
 from dataclasses import dataclass
+import logging
 
+def check_path(path: str) -> None:
+    if not path:
+        logging.info("No argument provided, str is required")
+        exit(1)
+    if not isinstance(path, str):
+        logging.info(f"{type(path)} str is required")
+        exit(1)
+    if not os.path.exists(path):
+        logging.info(f'{path} does not exist')
+        exit(1)
+    return
 @dataclass
 class MetaData:
     file_name: str
     delimiter: str
     columns_and_dtypes: dict[dict]
 
-
-
-
 def metadata_extractor(path: str) -> dict:
 
     file_name = os.path.basename(path)
 
     with open(path) as csvfile:
-        dialect = csv.Sniffer().sniff(csvfile.read(1024))
+        dialect = csv.Sniffer().sniff(csvfile.read(1024))   #read sample of file
         delimiter = dialect.delimiter                       #user csv.sniffer to determine delimiter
 
     df = pd.read_csv(path, delimiter=delimiter)
@@ -64,9 +73,6 @@ def metadata_extractor(path: str) -> dict:
 - delimiter = \"{delimiter}\"
 - columns_and_dtypes = {columns_and_dtypes}
 """)
-
-
-
 
 if __name__ == '__main__':
     print(metadata_extractor("/Users/jon/PycharmProjects/Horizon/CSVs/DataTypes.txt"))
