@@ -16,9 +16,13 @@ Example output:
 - columns_and_dtypes =  {"column_1": {"column_name": "date_time", "redshift_dtype": "timestamp"},
                         "column_2": {"column_name": "region_name", "redshift_dtype": "varchar(20)"},
                         "column_3": {"column_name": "sales_volume", "redshift_dtype": "integer"}}
-                        {'column_1': {'column_name': 'Data type', 'redshift_dtype': 'object'},
-                        'column_2': {'column_name': 'Aliases', 'redshift_dtype': 'object'},
-                        'column_3': {'column_name': 'Description', 'redshift_dtype': 'object'}}
+
+Note: I have left the current function to return pandas data types instead of redshift data types.
+I am unsure how one could determine a redshift datatype (e.g GEOMETRY, GEOGRAPHY) without either
+A) writing a case-matching statement to try to capture the range of potential values for each data type or
+B) assuming that data is already in redshift and queryable via a metadata table (e.g. PG_TABLE_DEF)
+
+I did not want to assume B and did not have time to implement A, so I've used pandas data types for this question.
 
 """
 
@@ -62,6 +66,7 @@ def metadata_extractor(path: str) -> dict:
     cols = [col for col in df.columns]
 
     schema = [(col, df[col].dtypes) for col in cols]    #constructs list of (Column:Data Type) tuples for each column
+
 
     columns_and_dtypes = {}
 
