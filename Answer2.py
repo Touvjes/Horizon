@@ -54,18 +54,24 @@ class MetaData:
 
 
 def metadata_extractor(path: str) -> dict:
+    check_path(path)
 
     file_name = os.path.basename(path)
 
-    with open(path) as csvfile:
-        dialect = csv.Sniffer().sniff(csvfile.read(1024))   #read sample of file
-        delimiter = dialect.delimiter                       #user csv.sniffer to determine delimiter
+    try:
+        with open(path) as csvfile:
+            dialect = csv.Sniffer().sniff(csvfile.read(1024))   #read sample of file
+            delimiter = dialect.delimiter                       #user csv.sniffer to determine delimiter
 
-    df = pd.read_csv(path, delimiter=delimiter)
+        df = pd.read_csv(path, delimiter=delimiter)
 
-    cols = [col for col in df.columns]
+        cols = [col for col in df.columns]
 
-    schema = [(col, df[col].dtypes) for col in cols]    #constructs list of (Column:Data Type) tuples for each column
+        schema = [(col, df[col].dtypes) for col in cols]    #constructs list of (Column:Data Type) tuples for each column
+    except:
+        logging.info(f'Could not open and extract data from {path}')
+        exit(1)
+
 
 
     columns_and_dtypes = {}

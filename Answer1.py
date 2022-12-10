@@ -48,7 +48,12 @@ def check_paths(paths: list[str]) -> None:
 def combine_CSVs(all_file_paths: list[str]) -> None:
     check_paths(all_file_paths)                     ##checks arguement datatype and validity of paths
 
-    df_final = pd.read_csv(all_file_paths[0])       ##intialize with first csv in path list
+    try:
+        df_final = pd.read_csv(all_file_paths[0])       ##intialize with first csv in path list
+    except:
+        logging.info(f'Failed to read {all_file_paths[0]}')
+        exit(1)
+
     columns = df_final.columns.tolist()
 
     for path in all_file_paths[1::]:                ##iterate from the second csv to end
