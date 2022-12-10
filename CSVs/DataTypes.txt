@@ -1,21 +1,21 @@
-﻿Data type;Aliases;Description
-SMALLINT;INT2;Signed two-byte integer
-INTEGER;"INT; INT4";Signed four-byte integer
-BIGINT;INT8;Signed eight-byte integer
-DECIMAL;NUMERIC;Exact numeric of selectable precision
-REAL;FLOAT4;Single precision floating-point number
-DOUBLE PRECISION;"FLOAT8; FLOAT";Double precision floating-point number
-BOOLEAN;BOOL;Logical Boolean (true/false)
-CHAR;"CHARACTER; NCHAR; BPCHAR";Fixed-length character string
-VARCHAR;"CHARACTER VARYING; NVARCHAR; TEXT";Variable-length character string with a user-defined limit
-DATE;;"Calendar date (year; month; day)"
-TIMESTAMP;TIMESTAMP WITHOUT TIME ZONE;Date and time (without time zone)
-TIMESTAMPTZ;TIMESTAMP WITH TIME ZONE;Date and time (with time zone)
-GEOMETRY;;Spatial data
-GEOGRAPHY;;Spatial data
-HLLSKETCH;;Type used with HyperLogLog sketches.
-SUPER;;A superset data type that encompasses all scalar types of Amazon Redshift including complex types such as ARRAY and STRUCTS.
-TIME;TIME WITHOUT TIME ZONE;Time of day
-TIME;TIME WITHOUT TIME ZONE;Time of day
-TIMETZ;TIME WITH TIME ZONE;Time of day with time zone
-VARBYTE;"VARBINARY; BINARY VARYING";Variable-length binary value
+﻿Data type,Aliases,Description
+SMALLINT,INT2,Signed two-byte integer
+INTEGER,"INT, INT4",Signed four-byte integer
+BIGINT,INT8,Signed eight-byte integer
+DECIMAL,NUMERIC,Exact numeric of selectable precision
+REAL,FLOAT4,Single precision floating-point number
+DOUBLE PRECISION,"FLOAT8, FLOAT",Double precision floating-point number
+BOOLEAN,BOOL,Logical Boolean (true/false)
+CHAR,"CHARACTER, NCHAR, BPCHAR",Fixed-length character string
+VARCHAR,"CHARACTER VARYING, NVARCHAR, TEXT",Variable-length character string with a user-defined limit
+DATE,,"Calendar date (year, month, day)"
+TIMESTAMP,TIMESTAMP WITHOUT TIME ZONE,Date and time (without time zone)
+TIMESTAMPTZ,TIMESTAMP WITH TIME ZONE,Date and time (with time zone)
+GEOMETRY,,Spatial data
+GEOGRAPHY,,Spatial data
+HLLSKETCH,,Type used with HyperLogLog sketches.
+SUPER,,A superset data type that encompasses all scalar types of Amazon Redshift including complex types such as ARRAY and STRUCTS.
+TIME,TIME WITHOUT TIME ZONE,Time of day
+TIME,TIME WITHOUT TIME ZONE,Time of day
+TIMETZ,TIME WITH TIME ZONE,Time of day with time zone
+VARBYTE,"VARBINARY, BINARY VARYING",Variable-length binary value

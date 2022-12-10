@@ -8,8 +8,8 @@ import csv
 import json
 def my_function(self, s3_key, data_df, stage_prefix, output_folder, delimiter=',', app_id='app_id'):
     """
-    This function takes a dataframe and splits it into multiple files based on the app_id column.
-
+    This function takes a dataframe and splits it into multiple files based on the client, found in the app_id column.
+    Ultimately, the function writes parts of the df to different locations based on the client.
     It creates a config file path based on the class attribute instance 'config_path' and  'app_map.json'
     If the path does not already exist, the function logs and exits with 1, indicating an error.
     Iterrows() is used to iterate over rows/columns of the dataframe.
@@ -24,14 +24,6 @@ def my_function(self, s3_key, data_df, stage_prefix, output_folder, delimiter=',
     and constructs tuples combining elements at the same index of each of those lists for each row.
     The 'data' dictionary is then written to the open file.
 
-    :param self: 
-    :param s3_key: 
-    :param data_df: 
-    :param stage_prefix: 
-    :param output_folder: 
-    :param delimiter: 
-    :param app_id: 
-    :return: 
     """
     config_file = os.path.join(self.config_path, 'app_map.json')
     if os.path.exists(config_file):

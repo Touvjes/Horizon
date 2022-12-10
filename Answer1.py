@@ -18,7 +18,6 @@ def check_col_names(df1: pd.DataFrame,df2: pd.DataFrame) -> None:
     if set(df1.columns) != set(df2.columns):
         logging.info(f"{set(df1.columns)} does not match {set(df2.columns)}")
         exit(1)
-
     return
 
 def check_dtypes(df1: pd.DataFrame,df2: pd.DataFrame) -> None:

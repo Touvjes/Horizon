@@ -28,6 +28,7 @@ import pandas as pd
 from dataclasses import dataclass
 import logging
 
+
 def check_path(path: str) -> None:
     if not path:
         logging.info("No argument provided, str is required")
@@ -39,11 +40,14 @@ def check_path(path: str) -> None:
         logging.info(f'{path} does not exist')
         exit(1)
     return
+
+
 @dataclass
 class MetaData:
     file_name: str
     delimiter: str
     columns_and_dtypes: dict[dict]
+
 
 def metadata_extractor(path: str) -> dict:
 
@@ -57,22 +61,25 @@ def metadata_extractor(path: str) -> dict:
 
     cols = [col for col in df.columns]
 
-    schema = [[col, df[col].dtypes] for col in cols]
+    schema = [(col, df[col].dtypes) for col in cols]    #constructs list of (Column:Data Type) tuples for each column
 
     columns_and_dtypes = {}
 
     index = 1
-    for s in schema:
+    for s in schema: #build column/dtype dictionary in the requested structure
         temp_dict = {"column_name": f"{s[0]}", "redshift_dtype": f"{s[1]}"}
         columns_and_dtypes[f"column_{index}"] = temp_dict
         index += 1
 
-    result = MetaData(file_name,delimiter,columns_and_dtypes)
+    # instantiating to a dataclass is not necessary, but makes the data structure more clear and easier to expand on
+    result = MetaData(file_name, delimiter, columns_and_dtypes)
+
     return(f"""
-- file_name = {file_name}
-- delimiter = \"{delimiter}\"
-- columns_and_dtypes = {columns_and_dtypes}
+- file_name = {result.file_name}
+- delimiter = \"{result.delimiter}\"
+- columns_and_dtypes = {result.columns_and_dtypes}
 """)
 
+
 if __name__ == '__main__':
-    print(metadata_extractor("/Users/jon/PycharmProjects/Horizon/CSVs/DataTypes.txt"))
+    print(metadata_extractor("/Users/jon/PycharmProjects/Horizon/CSVs/AAME.csv"))
